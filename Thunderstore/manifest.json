@@ -1,0 +1,12 @@
+{
+	"name": "ItemPack",
+	"version_number": "1.0.0",
+	"website_url": "",
+	"description": "Adds new items to Risk of Rain 2.",
+	"dependencies": [
+		"bbepis-BepInExPack-5.4.2122",
+		"RiskofThunder-R2API_Items-1.0.8",
+		"RiskofThunder-R2API_Language-1.1.0",
+		"RiskofThunder-R2API_RecalculateStats-1.7.0"
+	]
+}
