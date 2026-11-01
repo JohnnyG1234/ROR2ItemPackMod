@@ -17,7 +17,7 @@ namespace ItemPack
             Log.Init(Logger);
 
             // Register each item here
-            new SharpenedStone().Init();
+            new OatmilkLatte().Init();
 
             Log.Info("ItemPack loaded");
         }
