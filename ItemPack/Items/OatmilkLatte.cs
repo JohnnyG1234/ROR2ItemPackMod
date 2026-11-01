@@ -1,17 +1,10 @@
-// R2API: community modding library. We use ItemAPI (register items),
-// LanguageAPI (text), and RecalculateStatsAPI (stat changes).
 using R2API;
-// RoR2: the game's own code (ItemDef, ItemTier, ItemTag, CharacterBody).
 using RoR2;
-// UnityEngine: Unity engine types (ScriptableObject, Sprite, GameObject).
 using UnityEngine;
-// AddressableAssets: lets us load the game's built-in assets by path.
 using UnityEngine.AddressableAssets;
 
-// Groups this mod's items under ItemPack.Items.
 namespace ItemPack.Items
 {
-    // Common item: flat health regen (scales with level) + movement speed, per stack
     public class OatmilkLatte
     {
         // The item's definition. Static so there's a single copy, and so the
