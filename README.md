@@ -8,6 +8,6 @@ Run `dotnet build` in `ItemPack/`. Debug builds copy the DLL into the `ModTest` 
 
 ## Adding an item
 
-1. Copy `ItemPack/Items/OatmilkLatte.cs` to a new file and rename the class, item name and language tokens.
+1. Copy `ItemPack/Items/MunsterEnergy.cs` to a new file and rename the class, item name and language tokens.
 2. Add `new YourItem().Init();` in `ItemPackPlugin.Awake()`.
 3. Add it to the item table in `Thunderstore/README.md`.

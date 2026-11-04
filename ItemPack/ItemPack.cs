@@ -17,7 +17,7 @@ namespace ItemPack
             Log.Init(Logger);
 
             // Register each item here
-            new OatmilkLatte().Init();
+            new MunsterEnergy().Init();
 
             Log.Info("ItemPack loaded");
         }

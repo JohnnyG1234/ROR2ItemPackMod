@@ -12,6 +12,11 @@
     <None Remove="libs\**" />
   </ItemGroup>
 
+  <!-- Textures baked into the DLL, so there are no extra files to ship -->
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\**\*.png" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="BepInEx.Analyzers" Version="1.0.*">
       <PrivateAssets>all</PrivateAssets>
