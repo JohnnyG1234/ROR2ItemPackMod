@@ -20,6 +20,7 @@ namespace ItemPack.Items
         // Our can texture, embedded inside the DLL (see the EmbeddedResource line in ItemPack.csproj).
         // Embedded resource names are "<default namespace>.<folder>.<file>".
         private const string canTextureResource = "ItemPack.Assets.texMunsterCan.png";
+        private const string iconTextureResource = "ItemPack.Assets.mpreviewfinal.png";
 
         // Called once from the main plugin class (ItemPack.cs) when the mod loads.
         public void Init()
@@ -58,11 +59,12 @@ namespace ItemPack.Items
             // false = shows in the inventory bar. Hidden items are for internal tracking.
             itemDef.hidden = false;
 
-            // Placeholder "?" icon until we have a real one.
+            // Our rendered can icon. Falls back to the "?" icon if it can't be loaded.
             // LoadAssetAsync starts loading in the background; WaitForCompletion()
             // blocks until it's done so the asset is ready on the next line.
             // Blocking is fine here because this runs during mod startup.
-            itemDef.pickupIconSprite = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/Common/MiscIcons/texMysteryIcon.png").WaitForCompletion();
+            itemDef.pickupIconSprite = CreateIconSprite()
+                ?? Addressables.LoadAssetAsync<Sprite>("RoR2/Base/Common/MiscIcons/texMysteryIcon.png").WaitForCompletion();
 
             // The 3D model: Energy Drink's can with our texture. Falls back to the "?"
             // model if something goes wrong, so the item still works.
@@ -139,6 +141,24 @@ namespace ItemPack.Items
             }
 
             return clone;
+        }
+
+        // Turns the embedded icon PNG into a Sprite, the image type the UI uses.
+        // Returns null (and logs why) if the texture can't be loaded.
+        private static Sprite CreateIconSprite()
+        {
+            Texture2D iconTexture = LoadEmbeddedTexture(iconTextureResource);
+            if (!iconTexture)
+            {
+                return null;
+            }
+
+            // Bilinear, not Point: the UI draws the icon smaller than the PNG,
+            // and Point would make it look jagged.
+            iconTexture.filterMode = FilterMode.Bilinear;
+
+            // The Rect uses the whole image; (0.5, 0.5) puts the pivot in the center.
+            return Sprite.Create(iconTexture, new Rect(0f, 0f, iconTexture.width, iconTexture.height), new Vector2(0.5f, 0.5f));
         }
 
         // Reads a PNG embedded in the DLL and turns it into a Unity texture.
