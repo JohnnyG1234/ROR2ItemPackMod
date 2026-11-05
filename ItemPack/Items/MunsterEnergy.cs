@@ -9,15 +9,10 @@ namespace ItemPack.Items
 {
     public class MunsterEnergy
     {
-        // The item's definition. Static so there's a single copy, and so the
-        // static stat hook below can reach it.
         public static ItemDef itemDef;
 
-        // Tweak the item's numbers here, then rebuild. The description updates to match.
-        // const = baked in at compile time. The 'f' suffix makes it a float.
-        public const float regenPerStack = 1.0f;         // HP/s per stack at level 1
-        public const float regenPerLevelPerStack = 0.2f; // extra HP/s per stack for each level after 1
-        public const float speedPerStack = 0.07f;        // 0.07 = +7% movement speed per stack
+        public const float damagePerStack = 0.05f;       // 0.05 = +5% damage per stack
+        public const float speedPerStack = 0.10f;        // 0.10 = +10% movement speed per stack
 
         // Vanilla Energy Drink's pickup model. We copy it and repaint the copy.
         private const string energyDrinkPickupPath = "RoR2/Base/SprintBonus/PickupSoda.prefab";
@@ -54,8 +49,8 @@ namespace ItemPack.Items
 #pragma warning restore CS0618, Publicizer001
 
             // Tags put the item in categories (e.g. category-specific 3D printers, item filters).
-            // Healing + Utility, since it does both regen and movement speed.
-            itemDef.tags = new[] { ItemTag.Healing, ItemTag.Utility };
+            // Damage + Utility, since it does both damage and movement speed.
+            itemDef.tags = new[] { ItemTag.Damage, ItemTag.Utility };
 
             // true = printers, scrappers and Cleansing Pools can take it.
             itemDef.canRemove = true;
@@ -82,17 +77,16 @@ namespace ItemPack.Items
 
             // Attach English text to each token from above.
             LanguageAPI.Add("ITEMPACK_MUNSTERENERGY_NAME", "Munster Energy");
-            LanguageAPI.Add("ITEMPACK_MUNSTERENERGY_PICKUP", "Unleash the cheese. Regenerate health and move a little faster.");
+            LanguageAPI.Add("ITEMPACK_MUNSTERENERGY_PICKUP", "Unleash the cheese. Deal a little more damage and move faster.");
             // $"..." is an interpolated string: code inside {...} gets calculated.
-            //   {regenPerStack:0.##}       -> "1"  (up to 2 decimals, extra zeros dropped)
-            //   {speedPerStack * 100f:0.##} -> "7"  (0.07 turned into a percentage)
-            //   <style=cIsHealing> = RoR2 rich text, green healing color.
+            //   {damagePerStack * 100f:0.##} -> "5"  (0.05 turned into a percentage,
+            //                                         up to 2 decimals, extra zeros dropped)
+            //   <style=cIsDamage> = RoR2 rich text, damage color.
             //   <style=cIsUtility> = blue utility color.
-            //   <style=cStack>     = gray "per stack" color.
+            //   <style=cStack>    = gray "per stack" color.
             // The two $"..." pieces are joined with + into one string.
-            // Like vanilla items, the text only shows the level 1 regen value.
             LanguageAPI.Add("ITEMPACK_MUNSTERENERGY_DESC",
-                $"Increase <style=cIsHealing>base health regeneration</style> by <style=cIsHealing>+{regenPerStack:0.##} hp/s</style> <style=cStack>(+{regenPerStack:0.##} hp/s per stack)</style>. " +
+                $"Increase <style=cIsDamage>damage</style> by <style=cIsDamage>{damagePerStack * 100f:0.##}%</style> <style=cStack>(+{damagePerStack * 100f:0.##}% per stack)</style>. " +
                 $"Increase <style=cIsUtility>movement speed</style> by <style=cIsUtility>{speedPerStack * 100f:0.##}%</style> <style=cStack>(+{speedPerStack * 100f:0.##}% per stack)</style>.");
             LanguageAPI.Add("ITEMPACK_MUNSTERENERGY_LORE", "Contains 160mg of caffeine and an unspecified amount of cheese. Do not ask about the cheese.");
 
@@ -209,19 +203,10 @@ namespace ItemPack.Items
             int count = body.inventory.GetItemCount(itemDef);
             if (count > 0)
             {
-                // Flat regen at level 1, plus a bit more each level so it doesn't fall off late game.
-                // (R2API 1.2.0 has no levelRegenAdd, so we scale by body.level ourselves.
-                //  Stats are recalculated on level-up, so this stays current.)
-                // Example: level 10, 1 stack -> 1.0 + 0.2 * 9 = 2.8 HP/s.
-                float levelBonus = regenPerLevelPerStack * (body.level - 1f);
+                // Additive damage multiplier, linear stacking: 3 cans = +15%.
+                args.damageMultAdd += damagePerStack * count;
 
-                // baseRegenAdd is added to the character's base regen, before any regen
-                // multipliers: HEALTH_REGEN ~ (BASE_REGEN + baseRegenAdd) * (REGEN_MULT + regenMultAdd).
-                args.baseRegenAdd += (regenPerStack + levelBonus) * count;
-
-                // Additive movement speed multiplier, linear stacking: 3 cans = +21%.
-                // Use += (not =): other items and mods add to these same fields,
-                // and = would wipe out their bonuses.
+                // Additive movement speed multiplier, linear stacking: 3 cans = +30%.
                 args.moveSpeedMultAdd += speedPerStack * count;
             }
         }
