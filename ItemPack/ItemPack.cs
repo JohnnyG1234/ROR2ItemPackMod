@@ -18,6 +18,7 @@ namespace ItemPack
 
             // Register each item here
             new MunsterEnergy().Init();
+            new WhiteMunster().Init();
 
             Log.Info("ItemPack loaded");
         }
