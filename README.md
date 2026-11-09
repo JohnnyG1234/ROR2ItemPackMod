@@ -4,7 +4,7 @@ A Risk of Rain 2 item pack mod built with BepInEx and R2API.
 
 ## Building
 
-Run `dotnet build` in `ItemPack/`. Debug builds copy the DLL into the `ModTest` Thunderstore Mod Manager profile. Release builds (`dotnet build -c Release`) also create the Thunderstore upload zip at `ItemPack/bin/Release/ItemPack.zip`.
+Run `dotnet build` in `ItemPack/`. Debug builds copy the DLL into the `ModTest` Thunderstore Mod Manager profile. Release builds (`dotnet build -c Release`) also create the Thunderstore upload zip at `ItemPack/bin/Release/Munster_Energy_Items.zip`.
 
 ## Adding an item
 

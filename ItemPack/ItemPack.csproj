@@ -91,7 +91,7 @@
     <Message Condition="Exists('$(ModProfilePluginsDir)')" Importance="high" Text="Copied $(TargetFileName) to $(ModProfilePluginsDir)\ItemPack" />
   </Target>
 
-  <!-- Release builds also produce the Thunderstore upload zip: bin\Release\ItemPack.zip -->
+  <!-- Release builds also produce the Thunderstore upload zip: bin\Release\Munster_Energy_Items.zip -->
   <PropertyGroup>
     <ThunderstoreDir>$(MSBuildProjectDirectory)\..\Thunderstore</ThunderstoreDir>
     <PackageStagingDir>$(BaseIntermediateOutputPath)thunderstore</PackageStagingDir>
@@ -100,8 +100,8 @@
   <Target Name="PackageThunderstore" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
     <RemoveDir Directories="$(PackageStagingDir)" />
     <Copy SourceFiles="$(ThunderstoreDir)\manifest.json;$(ThunderstoreDir)\README.md;$(ThunderstoreDir)\icon.png;$(ThunderstoreDir)\CHANGELOG.md;$(TargetPath)" DestinationFolder="$(PackageStagingDir)" />
-    <ZipDirectory SourceDirectory="$(PackageStagingDir)" DestinationFile="$(MSBuildProjectDirectory)\bin\Release\$(TargetName).zip" Overwrite="true" />
-    <Message Importance="high" Text="Created Thunderstore package bin\Release\$(TargetName).zip" />
+    <ZipDirectory SourceDirectory="$(PackageStagingDir)" DestinationFile="$(MSBuildProjectDirectory)\bin\Release\Munster_Energy_Items.zip" Overwrite="true" />
+    <Message Importance="high" Text="Created Thunderstore package bin\Release\Munster_Energy_Items.zip" />
   </Target>
 
 </Project>

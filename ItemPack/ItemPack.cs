@@ -8,7 +8,7 @@ namespace ItemPack
     [BepInDependency(LanguageAPI.PluginGUID)]
     [BepInDependency(RecalculateStatsAPI.PluginGUID)]
 
-    [BepInPlugin("com.JohnGroton.ItemPack", "ItemPack", "1.0.0")]
+    [BepInPlugin("com.JohnGroton.ItemPack", "Munster Energy Items", "1.0.0")]
 
     public class ItemPackPlugin : BaseUnityPlugin
     {

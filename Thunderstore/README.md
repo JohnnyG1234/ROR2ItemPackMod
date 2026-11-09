@@ -1,4 +1,6 @@
-# ItemPack
+# Munster Energy Items
+
+![Munster Energy](https://raw.githubusercontent.com/JohnnyG1234/ROR2ItemPackMod/main/ItemPack/Assets/mpreviewfinal.png)
 
 Adds new items to Risk of Rain 2.
 

@@ -1,7 +1,7 @@
 {
-	"name": "ItemPack",
+	"name": "Munster_Energy_Items",
 	"version_number": "1.0.0",
-	"website_url": "",
+	"website_url": "https://github.com/JohnnyG1234/ROR2ItemPackMod",
 	"description": "Adds new items to Risk of Rain 2.",
 	"dependencies": [
 		"bbepis-BepInExPack-5.4.2122",
